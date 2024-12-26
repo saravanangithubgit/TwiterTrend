@@ -2,13 +2,16 @@
 FROM openjdk:17-jdk-slim
 
 # Set the working directory inside the container
-WORKDIR /twitter-trends
+WORKDIR /app
 
-# Copy the project's jar file to the container
-COPY target/spring-boot-middleware-0.0.1-SNAPSHOT.jar app.jar
+# Copy the project files to the container
+COPY . .
+
+# Run Maven to build the project
+RUN ./mvnw clean package
 
 # Expose the port that the app runs on
 EXPOSE 8080
 
 # Run the jar file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "target/spring-boot-middleware-0.0.1-SNAPSHOT.jar"]
